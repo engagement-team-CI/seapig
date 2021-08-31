@@ -7,6 +7,7 @@ workflows:
   hourly:
     jobs:
       - build
+      - build_large
     triggers:
       - schedule:
           cron: 0 * * * *
@@ -16,9 +17,21 @@ workflows:
                 - master
 
 jobs:
-  build:
+  build_large:
     working_directory: ~/seapig
     resource_class: large
+    docker:
+      - image: circleci/node:12.16.1
+    steps:
+      - checkout
+      - run:
+          name: Install
+          command: npm ci
+      - run:
+          name: Checks
+          command: npm run prepublish
+  build:
+    working_directory: ~/seapig
     docker:
       - image: circleci/node:12.16.1
     steps:
