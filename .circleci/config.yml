@@ -19,7 +19,6 @@ workflows:
 jobs:
   build_large:
     working_directory: ~/seapig
-    resource_class: large
     docker:
       - image: circleci/node:12.16.1
     steps:
